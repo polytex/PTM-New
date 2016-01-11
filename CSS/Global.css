@@ -1,0 +1,70 @@
+﻿
+body {margin:0px;padding:0px;font-family:Arial;font-size:12px;width:100%;}
+div {margin:0px;padding:0px;font-family:Arial;font-size:12px;}
+table {margin:0px;padding:0px;font-family:Arial;font-size:12px;}
+thead {display: table-header-group;}
+tr {page-break-inside: avoid;}
+
+input{font-size:12px;font-family:Arial;border:solid 1px #CCCCEE;vertical-align:middle;}
+button {font-size:12px;font-family:Arial;border:solid 1px #CCCCEE;vertical-align:middle;}
+textarea{font-size:12px;font-family:Arial;border:solid 1px #CCCCEE;}
+
+select {font-size:12px;font-family:Arial;height:20px;}
+
+
+.DivPageTitle {position:absolute;top:0px;font-size:22px;font-weight:bold;vertical-align:middle;height:36px;padding:3px 0px 0px 0px;}
+.DivPageTitlePopups {font-size:22px;font-weight:bold;vertical-align:middle;height:36px;padding:3px 0px 0px 0px;}
+
+.Header16 {color:Black;font-size:16px;}
+
+.AlignCenter {text-align:center;}
+
+.Validator {margin:0px 1px 0px 1px;font-weight:bold;line-height:12px;font-size:11px;color:Red;}
+
+.ActionMessage {font-weight:bold;font-size:13px;vertical-align:middle;margin:12px 6px 12px 6px;}
+.ActionSuccess {color:Green;}
+.ActionSuccessBlue {color:#375DAF;}
+.ActionFailure {color:Red;}
+
+
+.PanelBorder {border:solid 2px #659cf7;}
+.PanelBG {background-color:#F5F4ED;}
+.PanelHighlightedBG {background-color:#DDDDDD;}
+
+.TextPanelOverflow {overflow-x:hidden;overflow-y:auto;overflow:-moz-scrollbars-vertical;}
+
+/*Forms*/
+.PanelForm {border:solid 2px #659cf7;background-color:#F5F4ED;}
+.PanelForm td {height:20px;}
+.PanelFormRadio input{border:0px;}
+.PanelFormTdButton input{margin:6px;}
+.PanelFormDataText {font-weight:bold;}
+.PanelFormValidatorTr {}
+.PanelFormValidatorTr td {height:13px;padding:0px 4px 0px 4px;}
+
+.CheckBox {}
+.CheckBox input {border-width:0px;}
+
+.InputReadOnly {cursor:default;border-color:#CECBD6;color:#5D5C5F;}
+
+.TextOrange {color:#FF6000;}
+.TextLightOrange {color:#FF7B2C;}
+
+.TdFieldName {vertical-align:top;white-space:nowrap;}
+.TdFieldValue {vertical-align:top;color:#333333;}
+
+
+/*Tabs*/
+.TabsMainTable {width:100%;height:31px;font-weight:bold;}
+.TabsMainTd {background-image:url('../../Images/Tabs/BG.gif');padding:0px 3px 0px 3px;height:31px;vertical-align:bottom;}
+.TabsMainTdWhite {background-image:url('../../Images/Tabs/BGwhite.gif');padding:0px 3px 0px 3px;height:31px;vertical-align:bottom;}
+
+.TabSideUnselectedright {width:3px;cursor:pointer;background-image:url('../../Images/Tabs/UnselectedRight.gif');}
+.TabSideUnselectedleft {width:3px;cursor:pointer;background-image:url('../../Images/Tabs/UnselectedLeft.gif');}
+.TabCenterUnselected {background-image:url('../../Images/Tabs/UnselectedCenter.gif');padding:0px 6px 0px 6px;cursor:pointer;color:Blue;}
+
+.TabSideSelectedright {width:3px;background-image:url('../../Images/Tabs/Selectedright.gif')}
+.TabSideSelectedleft {width:3px;background-image:url('../../Images/Tabs/Selectedleft.gif')}
+.TabCenterSelected {background-image:url('../../Images/Tabs/SelectedCenter.gif');padding:0px 6px 0px 6px;}
+
+	

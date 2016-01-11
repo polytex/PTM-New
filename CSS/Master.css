@@ -1,0 +1,35 @@
+﻿
+
+.TableMasterHeader {width:100%;direction:ltr;} /*Mode styles*/
+.imgLogo {margin:10px 8px 4px 20px;width:320px;height:45px;cursor:pointer;}
+
+.tableTimer {text-align:right;margin-top:6px;padding: 0px 4px 0px 4px;}
+.tableTimer div {padding:4px 2px 1px 2px;cursor:default;height:20px;color:Blue;}
+
+.DivMain {width:100%;margin:0px 0px 30px 0px;vertical-align:top;}
+.TdMenu {width:150px;vertical-align:top;padding:0px;margin-top:3px;}
+.TdMain {padding:0px 2px 0px 2px;margin-top:3px;vertical-align:top;}
+.DivToolBox {position:absolute;top:0px;}
+.DivContentPlaceHolder {position:relative;top:36px;vertical-align:top;padding:0px 2px 2px 2px;}
+
+.tableFooter {width:100%;border-top:solid 1px #999999;height:24px;text-align:center;}
+
+/*ToolBox*/
+.ToolBoxTd {background-image:url('../Images/Toolbar/BG.gif');width:26px;height:100%;text-align:center;}
+.ToolBoxTdMobile {background-image:url('../Images/Toolbar/BG2.gif');width:26px;height:100%;text-align:center;}
+.ToolBoxTdMobileSpacer {background-image:url('../Images/Toolbar/BG2.gif');height:100%;text-align:center;}
+
+.ToolBoxButtonOut {margin:1px;vertical-align:top;cursor:pointer;}
+.ToolBoxButtonOver {margin:0px;border:solid 1px #FF8B00;background-color:#FAC380;vertical-align:top;cursor:pointer;}
+
+.LinkButtonText{ color: #000000;}
+.LinkButtonText:hover { text-decoration: none; }
+
+@media print
+{
+	.TableMasterHeader {display:none;}
+	.TdMenu {display:none;}		
+	.DivToolBox {display:none;}
+	.tableFooter {display:none;}
+}
+

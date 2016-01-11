@@ -1,0 +1,19 @@
+
+
+<asp:GridView 
+    runat="server" 
+    AllowPaging="True" 
+    AutoGenerateColumns="False" 
+    DataKeyNames="ID" 
+    GridLines="None" 
+    ShowFooter="True" 
+    CssClass="PanelBorder PanelBG GridView" 
+    RowHeaderColumn="ID" 
+    BorderWidth="2px"    
+    >
+    <HeaderStyle CssClass="GridHeader" />    
+    <PagerStyle CssClass="GridPager" HorizontalAlign="Center" />
+    <FooterStyle CssClass="GridFooter" VerticalAlign="Top" />
+    <EditRowStyle VerticalAlign="Top" />
+    <SelectedRowStyle BorderColor="#804040" BorderStyle="Solid" BorderWidth="1px" CssClass="PanelHighlightedBG" />        
+</asp:GridView>

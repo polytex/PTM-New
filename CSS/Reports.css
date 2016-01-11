@@ -1,0 +1,27 @@
+﻿.TableReport {width:100%;margin:0px 0px 40px 0px;}
+
+/*Reports Header*/
+.LabelRecords {color:Black;font-weight:bold;}
+.LabelRecordsLimited {color:Red;font-weight:bold;}
+.ReportHeaderSpacerTd {width:120px;}
+
+
+.DivSumLabel {padding:0px 4px 0px 4px;white-space:nowrap;}
+
+/*Reports popups*/
+.DivReportPopup {width:100%;border:solid 1px #C0C0C0;background-color:#F5F4ED;vertical-align:top;}
+
+.TableFieldsStretched {width:100%;vertical-align:top;padding:0px 8px 0px 8px;}
+.TableFieldsStretched tr{height:30px;}
+.TableFieldsNotStretched {vertical-align:top;padding:0px 8px 0px 8px;}
+.TableFieldsNotStretched tr{height:30px;}
+
+.TableQueryFromToDate {vertical-align:top;padding:0px;}
+.TableQueryFromToDate tr{height:30px;}
+
+.DivQueryFieldTitle {margin:7px 0px 0px 0px;white-space:nowrap;}
+
+.ThumbImageSingle {cursor:pointer;border:solid 2px white;}
+.ThumbImageDouble {cursor:pointer;border:solid 2px #659cf7;}
+
+

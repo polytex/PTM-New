@@ -1,0 +1,12 @@
+﻿
+.MenuWidth {}
+.MenuItemWidth {}
+
+.MenuSpacer {height:2px;border-width:0px;background-color:#B1B1FF;font-size:1px;line-height:1px;margin:0px;padding:0px;}
+
+.HeaderWrapperDiv {cursor:default;line-height:17px;background-color:#659cf7;font-weight:bold;color:white;background-image: url(../Images/PanelHeaderBG.gif);}
+.HeaderInnerDiv {padding:0px 5px 0px 5px;}
+
+.ItemWrapperDiv {cursor:pointer;background-color:#F5F4ED;border:solid 1px #F5F4ED;}
+.ItemWrapperDivOnPage {cursor:pointer;background-color:#DDDDDD;border:solid 1px #F5F4ED;}
+.ItemInnerDiv {margin:0px 5px 1px 5px;line-height:20px;}

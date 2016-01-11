@@ -1,0 +1,16 @@
+﻿
+.TableUsersDetails {}
+.TableUsersDetails td {height:26px;}
+
+.trItem {height:22px;}
+.tdItemOrderType {}
+.tdItemName {vertical-align:middle;white-space:nowrap;}
+.tdItemRfid {text-align:right;}
+.tdItemQuantity {text-align:right;}
+.imgRemoveItem {width:20px;height:20px;cursor:pointer;}
+
+.buttonSaveOrders {background-image:url('../Images/Buttons/update.gif');background-repeat:no-repeat;height:24px;}
+
+.textBoxRfidLoading {padding-top:2px; background: url('../Images/Loading.gif') top left no-repeat;}
+
+

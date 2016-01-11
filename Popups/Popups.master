@@ -1,0 +1,133 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Popups.master.cs" Inherits="Popups_Popups" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <script src="../JS/Global.js?version=<%=PolyPage.WebManagerVersion %>" type="text/javascript" language="javascript"></script>
+    <script src="../JS/Popup.js?version=<%=PolyPage.WebManagerVersion %>" type="text/javascript" language="javascript"></script>    
+    <script src="../JS/ToolBox.js?version=<%=PolyPage.WebManagerVersion %>" type="text/javascript" language="javascript"></script>
+    <link href="../CSS/Global.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />        
+    <link href="../CSS/<%=PolyPage.CultureDirection %>.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />    
+    <link href="../CSS/Popups.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />        
+    <link href="../CSS/Gridview.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />
+    <link href="../CSS/Reports.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />
+    <link href="../CSS/Master.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />
+<script type="text/javascript">
+var isPopupOpened = true;  //Global variable for popups if is visibly opened
+
+var zIndex = 3;
+var IsMobile = "<%=PolyPage.IsMobile %>";
+
+function SetOpacity(obj, blurTo)
+{
+    if (IsClientBrowserIE())
+    {
+        obj.style.filter = "progid:DXImageTransform.Microsoft.Alpha(Opacity:" + blurTo + ")";
+    }
+    else
+    {        
+        obj.style.opacity = (blurTo/100);
+    }
+}
+
+function RemoveOpacity(obj)
+{
+    if (IsClientBrowserIE())
+    {
+        obj.style.filter = "progid:DXImageTransform.Microsoft.Alpha(Opacity:100)";
+    }
+    else
+    {
+        obj.style.opacity = 1;
+    }
+}
+
+function SubmitForm()
+{
+    <%=strJsFormAction %>
+    
+    OnFormSubmit();
+}
+
+function PopupSelfClose(onCloseClearPopup)
+{
+    
+    isPopupOpened = false;
+    parent.ClosePopup();
+        
+    try
+    {//If needs to do some action on popup closing
+        <%=CurrentPopup %>OnClose();
+    }
+    catch (e)
+    {
+    
+    }
+    
+    if (onCloseClearPopup)
+    {
+        //document.body.innerHTML = "";
+    }
+}
+
+
+
+if (IsClientBrowserChrome()) 
+{
+    document.onkeydown = PopupKeyPressHandler;
+}
+else
+{
+    document.onkeypress = PopupKeyPressHandler
+}
+
+function PopupKeyPressHandler(e) 
+{                 
+    var kC  = (window.event) ?    // MSIE or Firefox?
+             event.keyCode : e.keyCode;
+    var Esc = (window.event) ?   
+            27 : e.DOM_VK_ESCAPE // MSIE : Firefox
+    
+    if (kC == Esc)
+    {                                        
+        top.EscPopupClicked();      
+    }
+}
+
+function OnLoad()
+{    
+    //Call CurrentPage specific body onload    
+    try
+    {
+        <%=PolyUtils.CurrentPage %>OnLoad();
+    }
+    catch(e)
+    {
+
+    }
+}
+</script>
+<style type="text/css">
+.PopupContentHeight {<%=PopupContentHeight %>}
+
+</style>    
+</head>
+<body onload="OnLoad()" topmargin="0" rightmargin="0" bottommargin="0" leftmargin="0" style="margin:0px;padding:0px;font-weight:bold;cursor:default;<%=PopupOverFlowStyle %>">
+<form id="form1" runat="server" method="post" onsubmit="SubmitForm()">
+<img id="ImgBlocker" src="<%=PolyPage.SiteURL %>Images/Blocker.gif" style="display:none;z-index:2;width:0px;height:0px;position:absolute;margin:0px;padding:0px;top:0px;left:0px;<%= ClientBrowser == "ie" ? "" : "opacity:0.2" %>;" alt=""  />
+<div id="DivPopup" class="PanelBorder" style="width:0px;height:0px;position:absolute;top:0px;left:0px;display:none;background-color:White;margin:0px;padding:0px;<%= ClientBrowser == "ie" ? "filter:progid:DXImageTransform.Microsoft.Shadow(color='#9999AA', Direction=145, Strength=3);" : ""%>"><iframe id="PopupIframe" name="PopupIframe" frameborder="0" marginheight="0" marginwidth="0" style="width:100%;height:100%;"></iframe></div>
+<table id="TablePopupHeader" runat="server" cellpadding="0" cellspacing="0" border="0" style="width:100%;cursor:default;border:solid 0px black">
+<tr style="background-image:url('../Images/PanelHeaderBG.gif');background-repeat:repeat-x;color:White;font-weight:bold;font-size:13px;height:21px;">
+    <td style="width:22px;text-align:center;vertical-align:top;">
+        <img id="PopupIcon" runat="server" src="../Images/Icon.gif" width="16" height="16" align="middle" alt="" style="margin:2px 2px 0px 2px;" />   
+    </td>
+    <td class="CultureAlign" style="vertical-align:top;"><div style="margin-top:3px;"><asp:Label ID="LabelTitle" runat="server"></asp:Label></div></td>
+    <td class="CultureReverseAlign" style="width:20px;text-align:center;vertical-align:top;padding:1px 1px 0px 1px;cursor:pointer;"><img src="../Images/Buttons/X.gif" width="19" height="19" alt="<%=PolyUtils._T["CloseWindow"] %>" onmouseover="SetOpacity(this, 85);" onmouseout="RemoveOpacity(this);" onclick="PopupSelfClose(<%=OnCloseClearPopup.ToString().ToLower() %>);" style="margin-top:2px;" /></td>
+</tr>
+</table><asp:contentplaceholder id="ContentPlaceHolder1" runat="server"></asp:contentplaceholder>
+</form>
+</body>
+</html>

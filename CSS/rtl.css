@@ -1,0 +1,9 @@
+﻿body {direction:rtl;text-align:right;}
+table {direction:rtl;text-align:right;}
+div {direction:rtl;}
+
+.CultureAlign {text-align:right;direction:rtl;}
+.CultureReverseAlign {text-align:left;}
+.CultureDirection {direction:rtl;}
+
+.GridHeader th{text-align:right;}

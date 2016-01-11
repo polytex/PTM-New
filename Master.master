@@ -1,0 +1,194 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Master.master.cs" Inherits="Master" %>
+<%@ Register Assembly="PolytexControls" Namespace="PolytexControls" TagPrefix="Polytex" %>
+<%@ Register Src="~/Controls/Menu.ascx" TagName="ManagerMenu" TagPrefix="Polytex" %>
+<%@ Register Src="~/Controls/ToolBox.ascx" TagName="ToolBox" TagPrefix="Polytex" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title><%=PageTitle%></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <script src="<%=PolyPage.SiteURL %>JS/Global.js?version=<%=PolyPage.WebManagerVersion %>" type="text/javascript" language="javascript"></script>
+    <script src="<%=PolyPage.SiteURL %>JS/Popup.js?version=<%=PolyPage.WebManagerVersion %>" type="text/javascript" language="javascript"></script>    
+    <script src="<%=PolyPage.SiteURL %>JS/ToolBox.js?version=<%=PolyPage.WebManagerVersion %>" type="text/javascript" language="javascript"></script>
+    <script src="<%=PolyPage.SiteURL %>JS/Reports.js?version=<%=PolyPage.WebManagerVersion %>" type="text/javascript" language="javascript"></script>
+    <script src="<%=PolyPage.SiteURL %>JS/<%=CurrentPage %>.js?version=<%=PolyPage.WebManagerVersion %>" type="text/javascript" language="javascript"></script>
+    <link href="<%=PolyPage.SiteURL %>CSS/Global.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />
+    <link href="<%=PolyPage.SiteURL %>CSS/Master.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />
+    <link href="<%=PolyPage.SiteURL %>CSS/Mode<%= PolyConfig.IsCreditCards ? "CreditCards" : "Standard" %>.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />
+    <link href="<%=PolyPage.SiteURL %>CSS/Menu.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />
+    <link href="<%=PolyPage.SiteURL %>CSS/Gridview.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />
+    <link href="<%=PolyPage.SiteURL %>CSS/Reports.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />
+    <link href="<%=PolyPage.SiteURL %>CSS/<%=PolyPage.CultureDirection %>.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />
+    <link href="<%=PolyPage.SiteURL %>CSS/<%=CurrentPage %>.css?version=<%=PolyPage.WebManagerVersion %>" type="text/css" rel="stylesheet" />   
+    <link rel="shortcut icon" href="<%=PolyPage.SiteURL %>Images/favicon.ico" />
+<script type="text/javascript">
+try
+{
+    var gPageStartTime = new Date().getTime();
+}
+catch (e)
+{ }
+
+window.name = "PolytexWebManager";
+
+var SiteURL = "<%=PolyPage.SiteURL %>";
+var ClientBrowser = "<%=ClientBrowser %>";
+var BrowserVersion = "<%=Request.Browser.MajorVersion %>";
+var CurrentPage = "<%=CurrentPage %>";
+var zIndex = 1;
+var IsMobile = false;
+function OnLoad()
+{    
+    //If logged out in popup, loggout top window
+    //On printing report avoid loggout (because "PolytexWebManager" is in hidden frame)   
+    if (window.top != window && window.name == "PolytexWebManager" && 1 == <%=PolyReport.IsPrintingLayout ? "0" : "1" %>)
+    {
+        window.top.location = SiteURL;        
+    }
+    
+    AlignFooter();
+    
+
+    
+    //Call CurrentPage specific body onload    
+    try
+    {
+        <%=CurrentPage %>OnLoad();
+    }
+    catch(e)
+    {
+
+    }
+    
+    //BROWSER RENDERING SPEED
+    try
+    {
+        var pageEndTime = (new Date( )).getTime( );
+        var pageLoadTime = (pageEndTime - gPageStartTime)/1000;                
+    }
+    catch(e)
+    {}
+    
+    //Focus textbox
+    try
+    {
+        var focusControl = "<%= ((PolyPage)this.Page).FocusControlClientId%>";
+        if (Trim(focusControl) != "")
+        {
+            document.getElementById(focusControl).focus();;
+        }
+    }
+    catch(e)
+    {}    
+}
+
+
+function AlignFooter()
+{
+    var alignFooter = false;
+    if (CurrentPage == "Default")
+    {
+        alignFooter = true;
+    }
+    else
+    {
+        if (document.getElementById("DivMain").offsetHeight + document.getElementById("TableHeader").offsetHeight + 30 < f_clientHeight())
+        {
+            alignFooter = true;           
+        }
+    }
+    
+    if (alignFooter)
+    {        
+        var tableFooter = document.getElementById("TableFooter");        
+        tableFooter.style.left = "0px";
+        tableFooter.style.bottom = "0px";
+        tableFooter.style.position = "absolute";               
+    }
+}
+
+
+
+if (IsClientBrowserChrome()) 
+{
+    document.onkeydown = KeyPressHandler;
+}
+else
+{
+    document.onkeypress = KeyPressHandler;
+}
+
+
+  
+</script>
+
+</head>
+<body onload="StartTimer(new Date().valueOf());OnLoad()" <%=noScrollHtml %>>
+<form id="form1" runat="server" onsubmit="OnFormSubmit()">
+<div id="DivPopup" class="PanelBorder" style="z-index:1;width:0px;height:0px;position:absolute;top:0px;left:0px;display:none;background-color:white;margin:0px;padding:0px;<%= ClientBrowser == "ie" ? "filter:progid:DXImageTransform.Microsoft.Shadow(color='#9999AA', Direction=145, Strength=3);" : ""%>"><iframe id="PopupIframe" name="PopupIframe" frameborder="0" marginheight="0" marginwidth="0" style="width:100%;height:100%;margin:0px;padding:0px;" scrolling="no"></iframe></div>
+<img id="ImgBlocker" src="Images/Blocker.gif" style="display:none;z-index:1;width:0px;height:0px;position:absolute;top:0px;left:0px;<%= ClientBrowser == "ie" ? "filter:alpha(opacity=20)" : "opacity:0.2" %>;" alt=""  />
+<table id="TableHeader" class="TableMasterHeader" cellpadding="0" cellspacing="0" border="0">
+<tr>
+    <td style="white-space:nowrap;text-align:left;">
+        <table cellpadding="0" cellspacing="0" border="0" style="direction:ltr;">
+        <tr>
+            <td style="width:160px;white-space:nowrap;"><img src="Images/Header.gif" class="imgLogo" align="middle" alt="" style="width:160px; " onclick="document.location='Welcome.aspx'" /></td>
+            <td><div style="font-style:italic;color:blue;cursor:default;margin-top:24px;direction:ltr;"></div></td>
+        </tr>
+        </table>
+    </td>     
+    <td style="vertical-align:top;">
+        <table cellpadding="0" cellspacing="0" border="0" class="tableTimer" align="right">
+        <tr>
+            <td><div id="divTimer"><%=DateTime.Now.ToLongDateString()%> <%=DateTime.Now.ToLongTimeString()%></div></td>
+        </tr>
+        <tr>
+            <td><div><asp:Label ID="LabelSystemUserName" runat="server" Text="Label" OnLoad="LabelSystemUserName_Load"></asp:Label></div></td>
+        </tr>
+        </table>    
+    </td>
+</tr>
+</table>
+
+<div id="DivMain" class="DivMain" align="center">        
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;" align="center">
+    <tr>
+        <td id="TdMenu" runat="server" class="TdMenu"><Polytex:ManagerMenu ID="PolytexMenu" runat="server" /></td>
+        <td class="TdMain CultureAlign">
+            <div style="position:relative;top:0px;width:100%;">
+                <div class="DivPageTitle" style="<%=ContentAlign %>:0px;"><asp:Label ID="LabelPageTitle" runat="server"></asp:Label></div>
+                <div class="DivToolBox" style="<%=PolyPage.CultureAlignReverse %>:-2px;"><Polytex:ToolBox ID="ToolBox" runat="server" /></div>
+                <div id="DivContentPlaceHolder" runat="server" class="DivContentPlaceHolder"><asp:contentplaceholder id="ContentPlaceHolder1" runat="server"></asp:contentplaceholder></div>
+            </div>
+         </td>                                      
+    </tr>  
+    </table>    
+</div>
+<table id="TableFooter" cellpadding="0" cellspacing="0" border="0" class="tableFooter" align="center" style="position:relative;bottom:0px;left:0px;">
+<tr align="center">
+	<td class="CultureAlign" style="padding:0px 12px 0px 12px;"><div style="direction:ltr;"><%=PolyConfig.DistributorName %></div></td>
+	<td><Polytex:Label ID="LabelSupport" Trans="Support" runat="server" />:</td>
+	<td style="direction:ltr;"><%=PolyConfig.DistributorPhone%></td>
+	<td style="direction:ltr;"><a href='mailto:<%=PolyConfig.DistributorEmail%>'><%=PolyConfig.DistributorEmail%></a></td>
+	<td class="CultureReverseAlign" style="padding:0px 12px 0px 12px;direction:ltr;"><a href='http://<%=PolyConfig.DistributorSite%>' target="polytex"><%=PolyConfig.DistributorSite%></a></td>
+</tr>
+</table>
+</form>
+<script type="text/javascript">
+function ScrollDown() 
+{
+    window.scrollTo(0,document.body.scrollHeight);
+ 
+}
+</script>
+</body>
+</html>
+
+
+
+
+

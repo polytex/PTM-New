@@ -1,0 +1,57 @@
+﻿
+.GridView {border-collapse:collapse;}
+
+.GridView td {page-break-inside:avoid;border-top:solid 1px #C0C0C0;border-left:solid 1px #EEEEEE;padding:1px 3px 1px 3px;height:23px;}
+
+.TwinRow td{border-top:dashed 1px #D7D5D5;}
+
+.NarrowRow td {padding:2px 1px 2px 1px;}
+
+.GridHeader {cursor:default;color:White;font-weight:bold;background-color:#84B2FC;background-image:url('../Images/PanelHeaderBG.gif');line-height:12px;height:18px;}
+.GridInnerHeader {cursor:default;color:White;font-weight:bold;background-image:url('../Images/PanelHeaderBG.gif');line-height:12px;height:18px;}
+.GridInnerHeader td {border-top:solid 2px #659cf7;}
+.GridHeader span{padding:1px 2px 1px 2px;}
+.GridHeader a{color:White;font-weight:bold;}
+
+.GridHeaderSort {cursor:pointer;color:White;font-weight:bold;text-decoration:underline;background-image:url('../Images/PanelHeaderBG.gif');line-height:12px;height:18px;}
+.GridHeaderSort span{padding:1px 2px 1px 2px;}
+
+.GridItemLtrNowrap {direction:ltr;white-space:nowrap;}
+
+.GridEditItemContent {margin:0px;padding:0px;}
+.GridEditItemContent table {margin:0px;padding:0px;}
+.GridEditItemContent td {border:0px;margin:0px;padding:0px;}
+
+
+.SelectedRowStyle {margin:0px;padding:0px;border-left:solid 1px #EEEEEE;}
+.SelectedRowStyle table {margin:0px;padding:0px;}
+.SelectedRowStyle td {margin:0px;padding:0px;}
+
+.GridFooter {margin:0px;padding:0px;}
+.GridFooter td {margin:0px;padding:1px 1px 1px 1px;border-bottom:solid 1px #C0C0C0;}
+.GridFooter table {margin:0px;padding:0px;}
+.GridFooterContent {margin:0px;padding:0px;}
+.GridFooterContent td {border:0px;margin:0px;padding:0px;}
+
+.ReportGridFooter {margin:0px;padding:0px;}
+.ReportGridFooter td{border-bottom:solid 1px #C0C0C0;vertical-align:middle;border-left-width:0px;border-right-width:0px;}
+
+
+.GridPagerInsideTable {direction:ltr;font-weight:bold;background-image:url('../Images/PagerBG.gif');background-repeat:repeat-y;}
+.GridPagerInsideTable a{color:Blue;}
+.GridPagerInsideTable td {border:0px;}
+.GridPager {border-top:solid 1px #C0C0C0;}
+
+.DivButtons {white-space:nowrap;}
+
+.MoreInfoText {color:Blue;cursor:pointer;text-decoration:underline;}
+
+@media print
+{
+	.GridHeader {color:Black;font-weight:bold;}	
+}
+
+
+
+
+
