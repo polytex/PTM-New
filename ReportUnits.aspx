@@ -11,6 +11,7 @@
 <input id="TextBoxToDateTime" name="TextBoxToDateTime" type="hidden" value="<%=ToDateTime.ToString() %>" />
 <input id="TextBoxTerritoryId" name="TextBoxTerritoryId" type="hidden" value="<%=TerritoryId %>" />
 <input id="TextBoxClientId" name="TextBoxClientId" type="hidden" value="<%=clientId %>" />
+<input id="CheckBoxIncludeDisabled" name="CheckBoxIncludeDisabled" type="hidden" value="<%=IncludeDisabled %>" />
 
 </span>
 
@@ -22,6 +23,7 @@
         <asp:Parameter Name="toDate" Type="DateTime" />
         <asp:Parameter DefaultValue="0" Name="territoryId" Type="Int32" />
         <asp:Parameter DefaultValue="0" Name="clientId" Type="Int32" />
+        <asp:Parameter DefaultValue="false" Name="includeDisabled" Type="Boolean" />
     </SelectParameters>
 </Polytex:ObjectDataSource>
 
@@ -103,7 +105,7 @@
                 <Polytex:LinkButton ID="LinkButtoTotalNameHeader" runat="server" Category="ColumnHeader" Trans="Total_Hours" CommandName="TOTAL_HOURS" OnCommand="SortGridView"></Polytex:LinkButton><asp:Image ID="ImageAscendingTOTAL_HOURS" runat="server" ImageUrl="~/Images/SortAscending.gif" OnPreRender="ImageSortAscending_PreRender" /><asp:Image ID="ImageDescendingTOTAL_HOURS" runat="server" ImageUrl="~/Images/SortDescending.gif" OnPreRender="ImageSortDescending_PreRender" />
             </HeaderTemplate>               
             <ItemTemplate>
-                <asp:Label ID="LabelTotal" runat="server" Text='<%# Bind("TOTAL_HOURS") %>'></asp:Label>
+                <asp:Label ID="LabelTotal" runat="server" Text='<%# GlobalFunctions.CalculateTotalHours(Eval("TOTAL_HOURS").ToString()) %>'></asp:Label>
             </ItemTemplate>
             <FooterTemplate>
                 <asp:Label ID="LabelTotalHours" runat="server" CssClass="GridFooterContent" Text='<%# GetTotalHours() %>'></asp:Label>

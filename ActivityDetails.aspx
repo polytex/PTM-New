@@ -37,7 +37,9 @@
         
 	</script>
 	
-	<input type="hidden" id="HiddenFieldClientId" name="ClientId" runat="server" EnableViewState="true" />
+<input type="hidden" id="HiddenFieldClientId" name="ClientId" runat="server" EnableViewState="true" />
+<input type="hidden" id="HiddenFieldActivityId" name="ActivityId" runat="server" EnableViewState="true" />
+
 	  
 <Polytex:ObjectDataSource ID="ObjectDataSourceActivityGroups" runat="server" SelectMethod="Select" TypeName="PolytexData.Manage_Activity_Groups">
     <SelectParameters>
@@ -71,8 +73,8 @@
 <tr>
     <td><Polytex:Label ID="LabelActivityStart" runat="server" Trans="ActivityDetail_FromDate"></Polytex:Label>:</td>
     <td>
-    <Polytex:TextBox ID="textboxActivityStart" runat="server" InputType="Date" IsRequired="true" ValidationGroup="GridEditItem" ValidatorsPosition="Horizontal" InsertEmptyItem="true"/>
-    <div align="<%#CultureAlign %>"><asp:CustomValidator ID="CustomValidatorDate" runat="server" ValidationGroup="GridEditItem" Display="Dynamic" OnServerValidate="CustomValidator_CheckDate" SetFocusOnError="True" CssClass="Validator" ValidatorsPosition="Horizontal"></asp:CustomValidator></div>
+        <Polytex:TextBox ID="textboxActivityStart" runat="server" InputType="Date" IsRequired="true" ValidationGroup="GridEditItem" ValidatorsPosition="Horizontal" InsertEmptyItem="true"/>
+        <div align="<%#CultureAlign %>"><asp:CustomValidator ID="CustomValidatorDate" runat="server" ValidationGroup="GridEditItem" Display="Dynamic" OnServerValidate="CustomValidator_CheckDate" SetFocusOnError="True" CssClass="Validator" ValidatorsPosition="Horizontal"></asp:CustomValidator></div>
     </td>
 </tr> 
 <tr>         
@@ -83,7 +85,7 @@
         </td>                         
 </tr>
 <tr>
-    <td><Polytex:Label ID="LabelTimeStart" runat="server" Trans="ActivityDetail_FromTime" DropDownListWidth="150">:</Polytex:Label></td>
+    <td><Polytex:Label ID="LabelTimeStart" runat="server" Trans="ActivityDetail_FromTime" DropDownListWidth="150">:</Polytex:Label>:&nbsp;</td>
      <td><Polytex:DropDownList ID="DropDownListStartTime" runat="server" DataTextField="NAME" DataValueField="ID" IsRequired="true" InsertEmptyItem="true" CssClass="GridEditItemContent" ValidationGroup="GridEditItem" ValidatorsPosition="Horizontal" DropDownListWidth="150"/></td>
 </tr>  
 <tr>   
@@ -112,7 +114,9 @@
 </tr> 
 <tr>         
     <td><Polytex:Label ID="LabelPartsNameHeader" runat="server" Trans="Parts"></Polytex:Label>:</td> 
-    <td><asp:TextBox ID="TextBoxParts" runat="server" TextMode="MultiLine" Rows="2" dir="ltr" InputType="String" CssClass="GridEditItemContent" IsRequired="True" maxlength="200"  ValidatorsPosition="Horizontal" style="text-align:left" Width="150"></asp:TextBox>
+    <td>
+        <asp:TextBox ID="TextBoxParts" runat="server" TextMode="MultiLine" Rows="2" dir="ltr" InputType="String" ValidationGroup="GridEditItem" CssClass="GridEditItemContent" IsRequired="True" maxlength="200"  ValidatorsPosition="Horizontal" style="text-align:left" Width="150"></asp:TextBox>
+        <asp:CustomValidator ID="CustomValidatorParts" runat="server" ValidationGroup="GridEditItem" CssClass="Validator" ControlToValidate="TextBoxParts" SetFocusOnError="true" ValidateEmptyText="true" ValidatorsPosition="Horizontal" ClientValidationFunction="TextareaRequired" ></asp:CustomValidator>
         <asp:RegularExpressionValidator runat="server" ID="RegularExpressionValidatorParts" ControlToValidate="TextBoxParts" ValidationExpression="^[\s\S]{0,200}$" ValidationGroup="GridEditItem" Display="Dynamic"></asp:RegularExpressionValidator>
     </td>               
 </tr> 
@@ -133,12 +137,11 @@
     </td>                           
 </tr> 
 <tr>
-    <td><Polytex:Label ID="LabelActivityEnd" runat="server" Trans="ActivityDetail_EndDate"></Polytex:Label>:</td>
-    <td><Polytex:TextBox ID="TextBoxActivityEnd" runat="server" InputType="Date" IsRequired="true" ValidationGroup="GridEditItem" ValidatorsPosition="Horizontal"/></td>
-</tr>
-<tr>
     <td><Polytex:Label ID="LabelTimeEnd" runat="server" Trans="ActivityDetail_EndTime"></Polytex:Label>:</td>
-     <td><Polytex:DropDownList ID="DropDownListTimeEnd" runat="server" DataTextField="NAME" DataValueField="ID" IsRequired="true" InsertEmptyItem="true" CssClass="GridEditItemContent" ValidationGroup="GridEditItem" ValidatorsPosition="Horizontal" DropDownListWidth="150"/> </td>
+    <td>
+        <Polytex:DropDownList ID="DropDownListTimeEnd" runat="server" DataTextField="NAME" DataValueField="ID" IsRequired="true" InsertEmptyItem="true" CssClass="GridEditItemContent" ValidationGroup="GridEditItem" ValidatorsPosition="Horizontal" DropDownListWidth="150"/>
+        <asp:CustomValidator ID="CustomValidatorTimeEnd" runat="server" ValidationGroup="GridEditItem" Display="Dynamic" OnServerValidate="CustomValidator_CheckTimeEnd" SetFocusOnError="True" CssClass="Validator" ValidatorsPosition="Horizontal"></asp:CustomValidator>   
+    </td>
 </tr>
 <tr>
     <td><Polytex:Label ID="LabelUploadImage" runat="server" Trans="Image"></Polytex:Label>:</td>

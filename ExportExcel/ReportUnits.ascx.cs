@@ -18,16 +18,17 @@ public partial class ExportExcel_ReportUnits : PolyExportReport
         ObjectDataSource1.SelectParameters["toDate"].DefaultValue = PolyReport.GetToDateTime().ToString();
 
 
-
         if (IsSendReport)
         {
             ObjectDataSource1.SelectParameters["territoryId"].DefaultValue = RequestQuerystring("territoryId");
             ObjectDataSource1.SelectParameters["clientId"].DefaultValue = RequestQuerystring("clientId");
+            ObjectDataSource1.SelectParameters["IncludeDisabled"].DefaultValue = (RequestQuerystring("IncludeDisabled") == "on" ? "true" : "false");  
         }
         else
         {
             ObjectDataSource1.SelectParameters["territoryId"].DefaultValue = PolyUtils.RequestFormByContainedKey("TextBoxTerritoryId");
             ObjectDataSource1.SelectParameters["clientId"].DefaultValue = PolyUtils.RequestFormByContainedKey("TextBoxClientId");
+            ObjectDataSource1.SelectParameters["IncludeDisabled"].DefaultValue = (PolyUtils.RequestFormByContainedKey("IncludeDisabled") == "on" ? "true" : "false");  
         }
 
 

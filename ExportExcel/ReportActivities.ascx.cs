@@ -17,7 +17,6 @@ public partial class ExportExcel_ReportActivities : PolyExportReport
         ObjectDataSource1.SelectParameters["fromDate"].DefaultValue = PolyReport.GetFromDateTime().ToString();
         ObjectDataSource1.SelectParameters["toDate"].DefaultValue = PolyReport.GetToDateTime().ToString();
 
-
         if (IsSendReport)
         {
 
@@ -28,6 +27,7 @@ public partial class ExportExcel_ReportActivities : PolyExportReport
             ObjectDataSource1.SelectParameters["activityGroupId"].DefaultValue = RequestQuerystring("activityGroupId");
             ObjectDataSource1.SelectParameters["activityTypeId"].DefaultValue = RequestQuerystring("activityTypeId");
             ObjectDataSource1.SelectParameters["systemUserId"].DefaultValue = RequestQuerystring("systemUserId");
+            ObjectDataSource1.SelectParameters["IncludeDisabled"].DefaultValue = (RequestQuerystring("IncludeDisabled") == "on" ? "true" : "false");  
         }
         else
         {
@@ -38,6 +38,7 @@ public partial class ExportExcel_ReportActivities : PolyExportReport
             ObjectDataSource1.SelectParameters["activityGroupId"].DefaultValue = PolyUtils.RequestFormByContainedKey("TextBoxActivityGroupId");
             ObjectDataSource1.SelectParameters["activityTypeId"].DefaultValue = PolyUtils.RequestFormByContainedKey("TextBoxActivityTypeId");
             ObjectDataSource1.SelectParameters["systemUserId"].DefaultValue = PolyUtils.RequestFormByContainedKey("TextBoxSystemUserId");
+            ObjectDataSource1.SelectParameters["IncludeDisabled"].DefaultValue = (PolyUtils.RequestFormByContainedKey("IncludeDisabled") == "on" ? "true" : "false");  
         }
 
 

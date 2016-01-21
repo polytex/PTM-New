@@ -12316,8 +12316,8 @@ Forskuddsbetalte pakker</NO>
     </AddActivity>
 
     <ActivityDetail_FromTime>
-      <HEB>משעה</HEB>
-      <ENG>From Time</ENG>
+      <HEB>שעת התחלה</HEB>
+      <ENG>Arrival Time</ENG>
     </ActivityDetail_FromTime>
 
     <ActivityDetail_FromDate>
@@ -12426,8 +12426,8 @@ Forskuddsbetalte pakker</NO>
 
 
     <Date_Start>
-      <HEB>תאריך התחלה</HEB>
-      <ENG>Date Start</ENG>
+      <HEB>תאריך</HEB>
+      <ENG>Date</ENG>
     </Date_Start>
 
     <Date_End>
@@ -12477,8 +12477,8 @@ Forskuddsbetalte pakker</NO>
     </ReportActivityType>
     
     <Date_End_Greater_Then_Date_Start>
-      <HEB>תאריך התחלה לא יכול להיות אחרי תאריך סיום</HEB>
-      <ENG>Date start can't be after Date end</ENG>
+      <HEB>שעת סיום לא יכולה להיות לפני שעת התחלה</HEB>
+      <ENG>'End Time' can't be before 'Start Time'</ENG>
     </Date_End_Greater_Then_Date_Start>
 
     <ActivityGroupName>
@@ -12496,6 +12496,12 @@ Forskuddsbetalte pakker</NO>
       <ENG>Include Image</ENG>
     </IncludeImage>
 
+
+    <IncludeImage>
+      <HEB>עם תמונה</HEB>
+      <ENG>Has Image</ENG>
+    </IncludeImage>
+    
 
     <UnitIP>
       <HEB>IP מכונה</HEB>
@@ -12519,15 +12525,33 @@ Forskuddsbetalte pakker</NO>
       <ENG>Version</ENG>
     </Version>
 
+    <Time_Start_Same_As_Time_End>
+      <HEB>שעת התחלה זהה לשעת סיום</HEB>
+      <ENG>Time start same as time end</ENG>
+    </Time_Start_Same_As_Time_End>
+    
     <Date_Start_Greater_Then_Today>
       <HEB>תאריך התחלה הנבחר גדול מהתאריך של היום</HEB>
-      <ENG>Date Start Greater Then Today</ENG>
+      <ENG>Date start greater then today</ENG>
     </Date_Start_Greater_Then_Today>
 
     <Date_End_Greater_Then_Today>
       <HEB>תאריך סיום הנבחר גדול מהתאריך של היום</HEB>
-      <ENG>Date End Greater Then Today</ENG>
+      <ENG>Date end greater then today</ENG>
     </Date_End_Greater_Then_Today>
 
+    <Activities_Date_Collision>
+      <HEB>חפיפה בתאריכים עם פעילות אחרת</HEB>
+      <ENG>Activities date collision</ENG>
+    </Activities_Date_Collision>
+
+
+    <Activity_Collision_Dates>
+      <HEB>פעילות מ %DATE_START% עד %DATE_END% חופפת בשעות לפעילות הנכחית</HEB>
+      <ENG>An activity (from %DATE_START% to %DATE_END%) which includes current activity time already exists</ENG>
+    </Activity_Collision_Dates>
+    
+    
+    
   </translation>
 </root>

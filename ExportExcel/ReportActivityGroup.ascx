@@ -7,6 +7,7 @@
         <asp:Parameter Name="fromDate" Type="DateTime" />
         <asp:Parameter Name="toDate" Type="DateTime" />
         <asp:Parameter DefaultValue="0" Name="territoryId" Type="Int32" />
+        <asp:Parameter DefaultValue="false" Name="includeDisabled" Type="Boolean" />
     </SelectParameters>
 </Polytex:ObjectDataSource>
 
@@ -24,7 +25,7 @@
         <Row>
             <Cell><Data ss:Type="Number"><%# RepeaterRowCounter%></Data></Cell> 
             <Cell><Data ss:Type="String"><%# Eval("ACTIVITY_GROUP_NAME").ToString()%></Data></Cell>                          
-            <Cell><Data ss:Type="String"><%# Eval("TOTAL_HOURS").ToString()%></Data></Cell>                       
+            <Cell><Data ss:Type="String"><%# GlobalFunctions.CalculateTotalHours(Eval("TOTAL_HOURS").ToString())%></Data></Cell>                       
             <Cell><Data ss:Type="String"><%# Eval("COUNT_ACTIVITIES").ToString()%></Data></Cell>
         </Row>
     </ItemTemplate>    

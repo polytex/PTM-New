@@ -65,6 +65,18 @@ public class GlobalFunctions
 
     #region Reports Functions
 
+    public static string CalculateTotalHours(string totalMinutes)
+    {
+        string totalHours = "";
+
+        decimal minutes;
+        if (Decimal.TryParse(totalMinutes, out minutes))
+        {
+            totalHours = decimal.Round((minutes / 60), 1).ToString("F1");// (minutes / 60).ToString();
+        }
+
+        return totalHours;
+    }
 
 }
 

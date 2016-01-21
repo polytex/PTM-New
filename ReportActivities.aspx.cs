@@ -28,13 +28,16 @@ public partial class ReportActivities : PolyReport
     public int activityTypeId = 0;
     public int systemUserId = 0;
     public string IncludeImage = "";
+    public string IncludeDisabled = "";
 
+    
     #endregion
 
     #region METHODS
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        
         if (ShowReport)
         {
             TableReport.Visible = true;
@@ -53,6 +56,7 @@ public partial class ReportActivities : PolyReport
             activityTypeId = Util.ValidateInt(PolyUtils.RequestFormOrQuerystringByContainedKey("ActivityTypeId"), 0);
             systemUserId = Util.ValidateInt(PolyUtils.RequestFormOrQuerystringByContainedKey("SystemUserId"), 0);
             IncludeImage = PolyUtils.RequestFormOrQuerystringByContainedKey("IncludeImage");
+            IncludeDisabled = PolyUtils.RequestFormOrQuerystringByContainedKey("IncludeDisabled");
 
 
             //Checkbox include image not checked
@@ -71,7 +75,7 @@ public partial class ReportActivities : PolyReport
             ObjectDataSource1.SelectParameters["activityGroupId"].DefaultValue = activityGroupId.ToString();
             ObjectDataSource1.SelectParameters["activityTypeId"].DefaultValue = activityTypeId.ToString();
             ObjectDataSource1.SelectParameters["systemUserId"].DefaultValue = systemUserId.ToString();
-
+            ObjectDataSource1.SelectParameters["IncludeDisabled"].DefaultValue = (IncludeDisabled == "on" ? "true" : "false");  
 
             LabelTerritoryName.Text = ApplicationData.UpdateLableTerritoryName(CurrentUser.TerritoryId,CurrentUser.SystemUserId,TerritoryId);
         }
@@ -95,12 +99,15 @@ public partial class ReportActivities : PolyReport
         if (files.Length > 0)
         {
             // Getting the extension of the file
-            string[] extension = files[0].Split('.');
+           string[] extension = files[0].Split('.');
            source = "ActivityImages/" + activityId + "_1." + extension[extension.Length - 1];
         }
 
         return source;
     }
+
+
+    
 
     #endregion
 }

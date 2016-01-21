@@ -10,7 +10,7 @@ using System.Web.UI.HtmlControls;
 
 using UniStr;
 using PolytexData;
-using PolytexTrace;
+//using PolytexTrace;
 
 /// <summary>
 /// Misc utils for Polytex WebManager project
@@ -337,15 +337,15 @@ public class PolyUtils
         }
     }
 
-    public static void WriteTrace(LogEntry.EntryTypes entryType, string title, string message)
-    {
-        new LogEntry(entryType, LogEntry.ProjectName.WebProject, title).Insert(message);
-    }
+    //public static void WriteTrace(LogEntry.EntryTypes entryType, string title, string message)
+    //{
+    //    new LogEntry(entryType, LogEntry.ProjectName.WebProject, title).Insert(message);
+    //}
 
-    public static void WriteTrace(string title, string station, Exception ex)
-    {
-        new LogEntry(LogEntry.EntryTypes.Exception, LogEntry.ProjectName.WebProject, station, title).Insert(ex);
-    }
+    //public static void WriteTrace(string title, string station, Exception ex)
+    //{
+    //    new LogEntry(LogEntry.EntryTypes.Exception, LogEntry.ProjectName.WebProject, station, title).Insert(ex);
+    //}
 
     public static void RemoveLastComma(ref string str)
     {

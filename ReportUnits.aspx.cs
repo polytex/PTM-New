@@ -20,6 +20,7 @@ public partial class ReportUnits : PolyReport
 
     public int TerritoryId = 0;
     public int clientId = 0;
+    public string IncludeDisabled = "";
 
     #endregion
 
@@ -33,12 +34,14 @@ public partial class ReportUnits : PolyReport
 
             TerritoryId = Util.ValidateInt(PolyUtils.RequestFormOrQuerystringByContainedKey("TerritoryId"), CurrentUser.TerritoryId);
             Int32.TryParse(PolyUtils.RequestFormByContainedKey("ClientId"), out clientId);
+            IncludeDisabled = PolyUtils.RequestFormOrQuerystringByContainedKey("IncludeDisabled");
 
             ObjectDataSource1.SelectParameters["skip"].DefaultValue = Skip.ToString();
             ObjectDataSource1.SelectParameters["fromDate"].DefaultValue = FromDateTime.ToString();
             ObjectDataSource1.SelectParameters["toDate"].DefaultValue = ToDateTime.ToString();
             ObjectDataSource1.SelectParameters["territoryId"].DefaultValue = TerritoryId.ToString();
             ObjectDataSource1.SelectParameters["clientId"].DefaultValue = clientId.ToString();
+            ObjectDataSource1.SelectParameters["IncludeDisabled"].DefaultValue = (IncludeDisabled == "on" ? "true" : "false");  
 
             LabelTerritoryName.Text = ApplicationData.UpdateLableTerritoryName(CurrentUser.TerritoryId, CurrentUser.SystemUserId, TerritoryId);
         }
@@ -65,7 +68,7 @@ public partial class ReportUnits : PolyReport
 
     public string GetTotalHours()
     {
-        string totalHours = Util.ValidateInt(ObjectDataSource1.ObjectDataSourceDataTable.ExtendedProperties["TOTAL"].ToString(), 0).ToString();
+        string totalHours = GlobalFunctions.CalculateTotalHours(Util.ValidateInt(ObjectDataSource1.ObjectDataSourceDataTable.ExtendedProperties["TOTAL"].ToString(), 0).ToString());
         return totalHours;
     }
 

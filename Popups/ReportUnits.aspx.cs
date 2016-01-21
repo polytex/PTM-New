@@ -34,7 +34,19 @@ public partial class Popups_ReportUnits : PolyPage
         {
             DropDownListTerritoryId.AspDropDownList.SelectedValue = CurrentUser.TerritoryId.ToString();
         }
-       
+
+        if (PolyUtils.RequestQuerystring("ShowReport") == "True")
+        {//Set values if in querystring                         
+            if (PolyUtils.RequestQuerystring("CheckBoxIncludeDisabled") == "on")
+            {
+                CheckBoxIncludeDisabled.Checked = true;
+            }
+            else
+            {
+                CheckBoxIncludeDisabled.Checked = false;
+
+            }
+        }
     }
 
     protected void Page_PreRender(object sender, EventArgs e)

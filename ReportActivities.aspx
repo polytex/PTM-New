@@ -17,6 +17,7 @@
 <input id="TextBoxActivityTypeId" name="TextBoxActivityTypeId" type="hidden" value="<%=activityTypeId %>" />
 <input id="TextBoxSystemUserId" name="TextBoxSystemUserId" type="hidden" value="<%= systemUserId %>" />
 <input id="CheckBoxIncludeImage" name="CheckBoxIncludeImage" type="hidden" value="<%=IncludeImage %>" />
+<input id="CheckBoxIncludeDisabled" name="CheckBoxIncludeDisabled" type="hidden" value="<%=IncludeDisabled %>" />
 
 </span>
 
@@ -33,6 +34,7 @@
         <asp:Parameter DefaultValue="0" Name="activityGroupId" Type="Int32" />
         <asp:Parameter DefaultValue="0" Name="activityTypeId" Type="Int32" />
         <asp:Parameter DefaultValue="0" Name="systemUserId" Type="Int32" />
+        <asp:Parameter DefaultValue="false" Name="includeDisabled" Type="Boolean" />
     </SelectParameters>
 </Polytex:ObjectDataSource>
 
@@ -83,20 +85,24 @@
         </asp:TemplateField>
         
         <asp:TemplateField>
-            <HeaderTemplate>
-                <Polytex:LinkButton ID="LinkButtonDateStartNameHeader" runat="server" Category="ColumnHeader" Trans="Date_Start" CommandName="DATE_START" OnCommand="SortGridView"></Polytex:LinkButton><asp:Image ID="ImageAscendingDATE_START" runat="server" ImageUrl="~/Images/SortAscending.gif" OnPreRender="ImageSortAscending_PreRender" /><asp:Image ID="ImageDescendingDATE_START" runat="server" ImageUrl="~/Images/SortDescending.gif" OnPreRender="ImageSortDescending_PreRender" />
-            </HeaderTemplate>               
+            <HeaderTemplate><Polytex:LinkButton ID="LinkButtonDateStartNameHeader" runat="server" Category="ColumnHeader" Trans="Date_Start" CommandName="DATE_START" OnCommand="SortGridView"></Polytex:LinkButton><asp:Image ID="ImageAscendingDATE_START" runat="server" ImageUrl="~/Images/SortAscending.gif" OnPreRender="ImageSortAscending_PreRender" /><asp:Image ID="ImageDescendingDATE_START" runat="server" ImageUrl="~/Images/SortDescending.gif" OnPreRender="ImageSortDescending_PreRender" /></HeaderTemplate>               
             <ItemTemplate>
-                <span dir="ltr" style="direction:ltr"><asp:Label ID="LabelDateStart" runat="server" Text='<%# Bind("DATE_START") %>'></asp:Label></span>
+                <span dir="ltr" style="direction:ltr"><asp:Label ID="LabelDateStart" runat="server" Text='<%# UniStr.Util.MakeShortDateByUIDateTimeFormat(Eval("DATE_START")) %>'></asp:Label></span>
             </ItemTemplate>                    
         </asp:TemplateField>
         
+        
         <asp:TemplateField>
-            <HeaderTemplate>
-                <Polytex:LinkButton ID="LinkButtonDateEndNameHeader" runat="server" Category="ColumnHeader" Trans="Date_End" CommandName="DATE_END" OnCommand="SortGridView"></Polytex:LinkButton><asp:Image ID="ImageAscendingDATE_END" runat="server" ImageUrl="~/Images/SortAscending.gif" OnPreRender="ImageSortAscending_PreRender" /><asp:Image ID="ImageDescendingDATE_END" runat="server" ImageUrl="~/Images/SortDescending.gif" OnPreRender="ImageSortDescending_PreRender" />
-            </HeaderTemplate>               
+            <HeaderTemplate><Polytex:LinkButton ID="LinkButtonTimeStartNameHeader" runat="server" Category="ColumnHeader" Trans="ActivityDetail_FromTime" CommandName="DATE_START" OnCommand="SortGridView"></Polytex:LinkButton><asp:Image ID="ImageAscendingFromTimeDATE_START" runat="server" ImageUrl="~/Images/SortAscending.gif" OnPreRender="ImageSortAscending_PreRender" /><asp:Image ID="ImageDescendingFromTimeDATE_START" runat="server" ImageUrl="~/Images/SortDescending.gif" OnPreRender="ImageSortDescending_PreRender" /></HeaderTemplate>               
             <ItemTemplate>
-                <span dir="ltr" style="direction:ltr"><asp:Label ID="LabelDateEnd" runat="server" Text='<%# Bind("DATE_END") %>'></asp:Label></span>
+                <span dir="ltr" style="direction:ltr"><asp:Label ID="LabelDateEnd" runat="server" Text='<%# UniStr.Util.MakeShortTimeByUIDateTimeFormat(Eval("DATE_START")) %>'></asp:Label></span>
+            </ItemTemplate>                   
+        </asp:TemplateField>
+        
+        <asp:TemplateField>
+            <HeaderTemplate><Polytex:LinkButton ID="LinkButtonTimeEndNameHeader" runat="server" Category="ColumnHeader" Trans="ActivityDetail_EndTime" CommandName="DATE_END" OnCommand="SortGridView"></Polytex:LinkButton><asp:Image ID="ImageAscendingDATE_END" runat="server" ImageUrl="~/Images/SortAscending.gif" OnPreRender="ImageSortAscending_PreRender" /><asp:Image ID="ImageDescendingDATE_END" runat="server" ImageUrl="~/Images/SortDescending.gif" OnPreRender="ImageSortDescending_PreRender" /></HeaderTemplate>               
+            <ItemTemplate>
+                <span dir="ltr" style="direction:ltr"><asp:Label ID="LabelDateEnd" runat="server" Text='<%# UniStr.Util.MakeShortTimeByUIDateTimeFormat(Eval("DATE_END")) %>'></asp:Label></span>
             </ItemTemplate>                   
         </asp:TemplateField>
         
@@ -114,7 +120,7 @@
                 <Polytex:LinkButton ID="LinkButtoTotalNameHeader" runat="server" Category="ColumnHeader" Trans="Total_Hours" CommandName="TOTAL_HOURS" OnCommand="SortGridView"></Polytex:LinkButton><asp:Image ID="ImageAscendingTOTAL_HOURS" runat="server" ImageUrl="~/Images/SortAscending.gif" OnPreRender="ImageSortAscending_PreRender" /><asp:Image ID="ImageDescendingTOTAL_HOURS" runat="server" ImageUrl="~/Images/SortDescending.gif" OnPreRender="ImageSortDescending_PreRender" />
             </HeaderTemplate>               
             <ItemTemplate>
-                <asp:Label ID="LabelTotal" runat="server" Text='<%# Bind("TOTAL_HOURS") %>' ></asp:Label>
+                <asp:Label ID="LabelTotal" runat="server" Text='<%# GlobalFunctions.CalculateTotalHours(Eval("TOTAL_HOURS").ToString()) %>' ></asp:Label>
             </ItemTemplate>               
         </asp:TemplateField>
         
@@ -207,7 +213,7 @@
                 <Polytex:Label ID="LabelSolutionHeader" runat="server" Trans="Solution"></Polytex:Label>
             </HeaderTemplate>            
             <ItemTemplate>                
-                <Polytex:GridDataLabel ID="GridDataLabelSolution" runat="server" DataText='<%# Bind("SOLUTION") %>' MaxLength="30" ToolTip='<%# Bind("SOLUTION") %>'></Polytex:GridDataLabel>
+                <Polytex:GridDataLabel ID="GridDataLabelSolution" runat="server" DataText='<%# Bind("SOLUTION") %>' MaxLength="20" ToolTip='<%# Bind("SOLUTION") %>'></Polytex:GridDataLabel>
             </ItemTemplate>                          
         </asp:TemplateField>     
         
@@ -226,7 +232,7 @@
             </HeaderTemplate>            
             <ItemTemplate>
                 <a href='<%#  ApplicationData.GetImageSource(Eval("ID"))%>' target="_blank" >
-                     <asp:Image ID="ImgPreview"   ImageUrl='<%# ApplicationData.GetImageSource(Eval("ID")) %>' runat="server" Width="100px" Height="100px" />
+                     <asp:Image ID="ImgPreview"   ImageUrl='<%# ApplicationData.GetImageSource(Eval("ID")) %>' runat="server" Width="50px" Height="50px" />
                 </a>
             </ItemTemplate>                          
         </asp:TemplateField> 

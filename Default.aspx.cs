@@ -17,7 +17,7 @@ public partial class _Default : PolyPage
     }
 
     protected void Page_Load(object sender, EventArgs e)
-    {
+    {        
         if (!Page.IsPostBack)
         {//Not PostBack
             PolyUtils.ResponseCookie("AllowsCookies", "1", DateTime.Now.AddYears(5));

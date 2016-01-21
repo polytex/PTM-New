@@ -7,8 +7,7 @@ function AddActivity()
     document.location = "ActivityDetails.aspx?activityId=0";
 }
 </script>
-<Polytex:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="Select"
-    TypeName="PolytexData.Manage_Activities">
+<Polytex:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="Select" TypeName="PolytexData.Manage_Activities">
     <SelectParameters>
         <asp:Parameter DefaultValue="false" Name="includeDisabled" Type="Boolean" />
         <asp:Parameter DefaultValue="0" Name="territoryId" Type="Int32" />

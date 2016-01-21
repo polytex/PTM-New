@@ -17,14 +17,14 @@ using System.IO;
 /// </summary>
 public class ApplicationData
 {
-    private static DataTable systemUsersPermissions;
+    private static DataTable systemUsersPermissions; 
     private static DataTable systemUsersTerritory;
     private static DataTable alertsTransportMethods;    
     private static DataTable limitPeriodTypes;
-
+     
     public ApplicationData()
 	{
-
+         
     }
 
     #region Methods
@@ -151,49 +151,7 @@ public class ApplicationData
         return GetHexString((object)i);                
     }
 
-    public static DataTable GetSWUpdateFiles()
-    {
-        string[] arrLogFiles = Directory.GetFiles(Paths.Folder.SWUpdate, "*.cab", SearchOption.TopDirectoryOnly);
 
-        DataTable dtFiles = new DataTable();
-        dtFiles.Columns.Add(new DataColumn("ID"));
-        dtFiles.Columns.Add(new DataColumn("FileName"));
-        dtFiles.Columns.Add(new DataColumn("FilePath"));
-        dtFiles.Columns.Add(new DataColumn("Date"));
-        dtFiles.Columns.Add(new DataColumn("Size"));
-
-        string fileName;
-
-        int i = 0;
-        DataRow drFile;
-        FileInfo fInfo;
-        for (i = 0; i < arrLogFiles.GetLength(0); i++)
-        {
-            drFile = dtFiles.NewRow();
-            drFile["ID"] = i;
-
-            drFile["FilePath"] = arrLogFiles[i];
-
-            fileName = Path.GetFileName(arrLogFiles[i]);
-
-            drFile["FileName"] = fileName;
-            fInfo = new FileInfo(arrLogFiles[i]);
-            try
-            {
-                drFile["Date"] = fInfo.LastWriteTime;
-            }
-            catch
-            {
-                drFile["Date"] = DateTime.Now;
-            }
-            drFile["Size"] = (fInfo.Length / 1000).ToString() + " KB";
-            dtFiles.Rows.Add(drFile);
-        }
-
-        dtFiles.DefaultView.Sort = "Date DESC";
-
-        return dtFiles;        
-    }
 
     public static DataTable GetTimeOptions()
     {

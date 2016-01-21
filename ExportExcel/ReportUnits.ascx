@@ -8,6 +8,7 @@
         <asp:Parameter Name="toDate" Type="DateTime" />
         <asp:Parameter DefaultValue="0" Name="territoryId" Type="Int32" />
         <asp:Parameter DefaultValue="0" Name="clientId" Type="Int32" />
+        <asp:Parameter DefaultValue="false" Name="includeDisabled" Type="Boolean" />
     </SelectParameters>
 </Polytex:ObjectDataSource>
 
@@ -29,7 +30,7 @@
             <Cell><Data ss:Type="String"><%# Eval("TERRITORY_NAME").ToString() %></Data></Cell>
             <Cell><Data ss:Type="String"><%# Eval("CLIENT_NAME")%></Data></Cell>                                
             <Cell><Data ss:Type="String"><%# Eval("UNIT_NAME").ToString() %></Data></Cell>                                        
-            <Cell><Data ss:Type="String"><%# Eval("TOTAL_HOURS").ToString()%></Data></Cell>
+            <Cell><Data ss:Type="String"><%# GlobalFunctions.CalculateTotalHours(Eval("TOTAL_HOURS").ToString()) %></Data></Cell>
             <Cell><Data ss:Type="String"><%# Eval("COUNT_ACTIVITIES").ToString()%></Data></Cell>
         </Row>
     </ItemTemplate>    

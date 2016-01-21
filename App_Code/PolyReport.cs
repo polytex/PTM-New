@@ -161,7 +161,7 @@ public class PolyReport : PolyPage
             {
                 case "ReportActivities":
                     popupWidth = 550;
-                    popupHeight = 370;
+                    popupHeight = 420;
                     break;
                 case "ReportClients":
                     popupWidth = 400;

@@ -19,6 +19,7 @@ public partial class ReportClients : PolyReport
     #region VARIABLES
 
     public int TerritoryId = 0;
+    public string IncludeDisabled = "";
 
     #endregion
 
@@ -32,11 +33,13 @@ public partial class ReportClients : PolyReport
             TableReport.Visible = true;
 
             TerritoryId = Util.ValidateInt(PolyUtils.RequestFormOrQuerystringByContainedKey("TerritoryId"), CurrentUser.TerritoryId);
+            IncludeDisabled = PolyUtils.RequestFormOrQuerystringByContainedKey("IncludeDisabled");
 
             ObjectDataSource1.SelectParameters["skip"].DefaultValue = Skip.ToString();
             ObjectDataSource1.SelectParameters["fromDate"].DefaultValue = FromDateTime.ToString();
             ObjectDataSource1.SelectParameters["toDate"].DefaultValue = ToDateTime.ToString();
             ObjectDataSource1.SelectParameters["territoryId"].DefaultValue = TerritoryId.ToString();
+            ObjectDataSource1.SelectParameters["IncludeDisabled"].DefaultValue = (IncludeDisabled == "on" ? "true" : "false");  
 
            
 
@@ -67,7 +70,7 @@ public partial class ReportClients : PolyReport
 
     public string GetTotalHours()
     {
-        string totalHours = Util.ValidateInt(ObjectDataSource1.ObjectDataSourceDataTable.ExtendedProperties["TOTAL"].ToString(), 0).ToString();
+        string totalHours = GlobalFunctions.CalculateTotalHours(Util.ValidateInt(ObjectDataSource1.ObjectDataSourceDataTable.ExtendedProperties["TOTAL"].ToString(), 0).ToString());
         return totalHours;
     }
 

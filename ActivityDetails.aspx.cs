@@ -35,7 +35,9 @@ public partial class ActivityDetails : PolyPage
     {
         string sUA = Request.UserAgent.Trim().ToLower();
         if (sUA.Contains("android"))
+        {
             isMobile = true;
+        }
 
         clientList = ApplicationData.UpdateClientList(CurrentUser.TerritoryId)[0];
         clientListId = ApplicationData.UpdateClientList(CurrentUser.TerritoryId)[1];
@@ -44,11 +46,14 @@ public partial class ActivityDetails : PolyPage
         systemuserId = CurrentUser.SystemUserId;
         ObjectDataSourceClient.SelectParameters["territoryId"].DefaultValue = CurrentUser.TerritoryId.ToString();
         ObjectDataSourceUnit.SelectParameters["territoryId"].DefaultValue = CurrentUser.TerritoryId.ToString();
-        activityId =  Util.ValidateInt(RequestQuerystring("activityId"), 0);
+        
+        activityId = Util.ValidateInt(RequestQuerystring("activityId"), 0);
+        
 
         CustomValidatorDate.ErrorMessage = _T["Date_End_Greater_Then_Date_Start"];
         CustomValidatorRecommendation.ErrorMessage = _T["ItemRequired"];
-        CustomValidatorSolution.ErrorMessage = _T["ItemRequired"];
+        CustomValidatorParts.ErrorMessage = _T["ItemRequired"];
+        CustomValidatorSolution.ErrorMessage = _T["ItemRequired"];        
         CustomValidatorDescription.ErrorMessage = _T["ItemRequired"];
         CustomValidatorImageSize.ErrorMessage = _T["Max_File_Size"];
         CustomValidatorCheckClient.ErrorMessage = "Client not exist";
@@ -68,6 +73,17 @@ public partial class ActivityDetails : PolyPage
 
         if (!IsPostBack)
         {
+            switch (PolyUtils.RequestQuerystring("ActionSuccess"))
+            {
+                case "1":
+                    SetActionMessage(PolytexLabelActionMessage, ActionMessage.InsertedSuccessfuly);
+                    break;
+                case "2":
+                    SetActionMessage(PolytexLabelActionMessage, ActionMessage.UpdatedSuccessfuly);
+                    break;
+
+            }
+            
             DropDownListStartTime.AspDropDownList.DataSource = ApplicationData.GetTimeOptions();
             DropDownListStartTime.AspDropDownList.DataBind();
             DropDownListTimeEnd.AspDropDownList.DataSource = ApplicationData.GetTimeOptions();
@@ -76,8 +92,7 @@ public partial class ActivityDetails : PolyPage
             DropDownListDriveTime.AspDropDownList.DataBind();
 
             if (activityId > 0)
-            {
-                
+            {                
                 //Update fields to existing activity
                 PolytexObjects.Activity activity = new PolytexObjects.Activity(activityId);
                 ObjectDataSourceActivityTypes.SelectParameters["ActivityGroupId"].DefaultValue = activity.ActivityGroupId.ToString();
@@ -92,8 +107,7 @@ public partial class ActivityDetails : PolyPage
                 TextBoxSolution.Text = activity.Solution;
                 TextBoxRecommendations.Text = activity.Recommendation;
                 textboxActivityStart.Text = activity.DateStart;
-                DropDownListStartTime.AspDropDownList.SelectedValue = activity.HourStart;
-                TextBoxActivityEnd.Text = activity.DateEnd;
+                DropDownListStartTime.AspDropDownList.SelectedValue = activity.HourStart;                
                 DropDownListTimeEnd.AspDropDownList.SelectedValue = activity.HourEnd;
                 DropDownListDriveTime.AspDropDownList.SelectedValue = activity.DriveTime.ToString();
 
@@ -113,8 +127,7 @@ public partial class ActivityDetails : PolyPage
             }
             else
             {
-               textboxActivityStart.Text = DateTime.Now.ToShortDateString();
-               TextBoxActivityEnd.Text = DateTime.Now.ToShortDateString();
+               textboxActivityStart.Text = DateTime.Now.ToShortDateString();               
                ImgPreview.Visible = false;
             }
         }
@@ -158,7 +171,7 @@ public partial class ActivityDetails : PolyPage
             activity.Recommendation = TextBoxRecommendations.Text.Trim();
             string dateStart = textboxActivityStart.Text + " " + DropDownListStartTime.AspDropDownList.SelectedValue + ":00";
             activity.DtDateStart = DateTime.Parse(dateStart);
-            string dateEnd = TextBoxActivityEnd.Text + " " + DropDownListTimeEnd.AspDropDownList.SelectedValue + ":00";
+            string dateEnd = textboxActivityStart.Text + " " + DropDownListTimeEnd.AspDropDownList.SelectedValue + ":00";
             activity.DtDateEnd = DateTime.Parse(dateEnd);
             activity.DriveTime = Util.ValidateInt(DropDownListDriveTime.AspDropDownList.SelectedValue, 0);
 
@@ -171,7 +184,8 @@ public partial class ActivityDetails : PolyPage
                 UploadFile();
                 if (id.Equals("ButtonSaveActivity"))
                 {
-                    SetActionMessage(ActionMessage.UpdatedSuccessfuly);
+                    Response.Redirect("ActivityDetails.aspx?ActionSuccess=2&activityId=" + activityId.ToString(), true);
+                    //SetActionMessage(ActionMessage.UpdatedSuccessfuly);
                 }
                 else
                 {
@@ -185,7 +199,8 @@ public partial class ActivityDetails : PolyPage
                 UploadFile();
                 if (id.Equals("ButtonSaveActivity"))
                 {
-                    SetActionMessage(ActionMessage.InsertedSuccessfuly);
+                    Response.Redirect("ActivityDetails.aspx?ActionSuccess=1&activityId=" + activityId.ToString(), true);
+                    //SetActionMessage(ActionMessage.InsertedSuccessfuly);
                 }
                 else
                 {
@@ -209,8 +224,7 @@ public partial class ActivityDetails : PolyPage
         TextBoxSolution.Text = "";
         TextBoxRecommendations.Text = "";
         textboxActivityStart.Text = "";
-        DropDownListStartTime.AspDropDownList.SelectedValue = "";
-        TextBoxActivityEnd.Text = "";
+        DropDownListStartTime.AspDropDownList.SelectedValue = "";        
         DropDownListTimeEnd.AspDropDownList.SelectedValue = "";
         DropDownListDriveTime.AspDropDownList.SelectedValue = "";
         ImgPreview.Visible = false;
@@ -243,46 +257,83 @@ public partial class ActivityDetails : PolyPage
 
     protected void CustomValidator_CheckDate(object source, ServerValidateEventArgs args)
     {
-        string dateStart;
-        string dateEnd;
-        DateTime dStart;
-        DateTime dEnd;
+         
+        DateTime dtStart, dtEnd;        
+        SetDatesValues(out dtStart, out dtEnd);
 
-        if (textboxActivityStart.Text != "" && TextBoxActivityEnd.Text != "")
+        if (dtStart == new DateTime())
         {
-            dateStart = textboxActivityStart.Text + " " + DropDownListStartTime.AspDropDownList.SelectedValue + ":00";
-            dStart = DateTime.Parse(dateStart);
-            dateEnd = TextBoxActivityEnd.Text + " " + DropDownListTimeEnd.AspDropDownList.SelectedValue + ":00";
-            dEnd = DateTime.Parse(dateEnd);
-            if (dStart > DateTime.Now.AddDays(1) || dEnd > DateTime.Now.AddDays(1))
+            args.IsValid = false;
+            CustomValidatorDate.ErrorMessage = _T["General_Message_InvalidInput"];
+        }
+        else if (dtEnd == new DateTime())
+        {
+            args.IsValid = false;
+            CustomValidatorDate.ErrorMessage = _T["General_Message_InvalidInput"];
+        }
+        else if (dtStart > DateTime.Now.AddDays(1))
+        {
+            args.IsValid = false;
+            CustomValidatorDate.ErrorMessage = _T["Date_Start_Greater_Then_Today"];
+        }
+        else if (dtEnd > DateTime.Now.AddDays(1))
+        {
+            args.IsValid = false;
+            CustomValidatorDate.ErrorMessage = _T["Date_End_Greater_Then_Today"];
+        }
+        else 
+        {
+            DateTime dateStartCollision, dateEndCollision;
+            PolytexData.Manage_Activities.GetUserActivityDateCollision(activityId, CurrentUser.SystemUserId, dtStart, dtEnd, out dateStartCollision, out dateEndCollision);
+
+            if (dateStartCollision != new DateTime())
             {
-                if (dStart > DateTime.Now.AddDays(1))
-                {
-                    CustomValidatorDate.ErrorMessage = _T["Date_Start_Greater_Then_Today"];
-                }
-                else
-                {
-                    CustomValidatorDate.ErrorMessage = _T["Date_End_Greater_Then_Today"];
-                }
-                
                 args.IsValid = false;
-            }
-            else if (dStart <= dEnd)
-            {
-                args.IsValid = true;
+                CustomValidatorDate.ErrorMessage = _T["Activity_Collision_Dates"].Replace("%DATE_START%", UniStr.Util.MakeShortTimeByUIDateTimeFormat(dateStartCollision)).Replace("%DATE_END%", UniStr.Util.MakeShortTimeByUIDateTimeFormat(dateEndCollision));
             }
             else
             {
-                CustomValidatorDate.ErrorMessage = _T["Date_End_Greater_Then_Date_Start"];
-                args.IsValid = false;
+                args.IsValid = true;
             }
         }
 
-        else 
+    }
+
+
+    protected void CustomValidator_CheckTimeEnd(object source, ServerValidateEventArgs args)
+    {
+        DateTime dtStart, dtEnd; 
+        SetDatesValues(out dtStart, out dtEnd);
+
+        if (dtStart == dtEnd)
         {
-            CustomValidatorDate.ErrorMessage = _T["Date_End_Greater_Then_Date_Start"];
             args.IsValid = false;
+            CustomValidatorTimeEnd.ErrorMessage = _T["Time_Start_Same_As_Time_End"];
         }
+        else if (dtStart > dtEnd)
+        {
+            args.IsValid = false;
+            CustomValidatorTimeEnd.ErrorMessage = _T["Date_End_Greater_Then_Date_Start"];
+        }
+        else
+        {
+            args.IsValid = true;
+        }
+
+    }
+
+
+    private void SetDatesValues(out DateTime dtStart, out DateTime dtEnd)
+    {
+        dtStart = new DateTime();
+        dtEnd = new DateTime();
+        
+        string dateStart = textboxActivityStart.Text.Trim();
+        string timeStart = DropDownListStartTime.AspDropDownList.SelectedValue;        
+        string timeEnd = DropDownListTimeEnd.AspDropDownList.SelectedValue;
+        
+        DateTime.TryParse(dateStart + " " + timeStart + ":00", out dtStart);
+        DateTime.TryParse(dateStart + " " + timeEnd + ":00", out dtEnd);
     }
 
     protected void CustomValidator_CheckClientExist(object source, ServerValidateEventArgs args)

@@ -23,10 +23,12 @@ public partial class ExportExcel_ReportActivityGroup : PolyExportReport
         {
 
             ObjectDataSource1.SelectParameters["territoryId"].DefaultValue = RequestQuerystring("territoryId");
+            ObjectDataSource1.SelectParameters["IncludeDisabled"].DefaultValue = (RequestQuerystring("IncludeDisabled") == "on" ? "true" : "false");  
         }
         else
         {
             ObjectDataSource1.SelectParameters["territoryId"].DefaultValue = PolyUtils.RequestFormByContainedKey("TextBoxTerritoryId");
+            ObjectDataSource1.SelectParameters["IncludeDisabled"].DefaultValue = (PolyUtils.RequestFormByContainedKey("IncludeDisabled") == "on" ? "true" : "false");  
         }
 
 

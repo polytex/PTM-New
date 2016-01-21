@@ -88,12 +88,12 @@
                     <Polytex:DropDownList ID="DropDownListSystemUserId" runat="server" DropDownListWidth="150px" DataSourceID="ObjectDataSourceSystemUsers" DataTextField="NAME" DataValueField="ID" InsertEmptyItem="true" IsRequired="false" ValidationGroup="ReportQuery" ValidatorsPosition="Vertical"></Polytex:DropDownList>
                 </td>
             </tr>              
+            <tr>
+                <td colspan="2" style="padding-<%=CultureAlignReverse %>:12px;"><Polytex:CheckBox ID="CheckBoxIncludeImage" runat="server" Trans="IncludeImage" Checked="false" /></td>
+            </tr>
             <tr>        
-                <td style="vertical-align:top;"><div style="padding-top:6px"><Polytex:Label ID="LabelIncludeImage" runat="server" Trans="IncludeImage"></Polytex:Label>:&nbsp;&nbsp;</div></td>
-                <td>
-                    <asp:Checkbox ID="CheckBoxIncludeImage" name="Image" value="true" runat="server"></asp:Checkbox>
-                </td>
-            </tr>          
+                <td colspan="2" style="padding-<%=CultureAlignReverse %>:12px;"><Polytex:CheckBox ID="CheckBoxIncludeDisabled" runat="server" Trans="IncludeDisabled" Checked="false" /></td>              
+            </tr>                      
             </table>
         </td>                                               
     </tr>                     

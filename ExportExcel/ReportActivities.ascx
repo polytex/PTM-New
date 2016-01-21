@@ -13,6 +13,7 @@
         <asp:Parameter DefaultValue="0" Name="activityGroupId" Type="Int32" />
         <asp:Parameter DefaultValue="0" Name="activityTypeId" Type="Int32" />
         <asp:Parameter DefaultValue="0" Name="systemUserId" Type="Int32" />
+        <asp:Parameter DefaultValue="false" Name="includeDisabled" Type="Boolean" />
     </SelectParameters>
 </Polytex:ObjectDataSource>
 
@@ -22,7 +23,8 @@
        <Row ss:StyleID="s20">
               <Cell><Data ss:Type="String">#</Data></Cell>
               <Cell><Data ss:Type="String"><%=_T["Date_Start"]%></Data></Cell>
-              <Cell><Data ss:Type="String"><%=_T["Date_End"]%></Data></Cell>  
+              <Cell><Data ss:Type="String"><%=_T["ActivityDetail_FromTime"]%></Data></Cell>
+              <Cell><Data ss:Type="String"><%=_T["ActivityDetail_EndTime"]%></Data></Cell>  
               <Cell><Data ss:Type="String"><%=_T["Total_Hours"]%></Data></Cell>              
               <Cell><Data ss:Type="String"><%=_T["Territory"]%></Data></Cell>            
               <Cell><Data ss:Type="String"><%=_T["User_Name_Open_Activity"]%></Data></Cell>
@@ -40,9 +42,10 @@
         <ItemTemplate>
         <Row>
             <Cell><Data ss:Type="Number"><%# RepeaterRowCounter%></Data></Cell>
-            <Cell><Data ss:Type="String"><%# Eval("DATE_START").ToString()%></Data></Cell>
-            <Cell><Data ss:Type="String"><%# Eval("DATE_END").ToString()%></Data></Cell>
-            <Cell><Data ss:Type="String"><%# Eval("TOTAL_HOURS").ToString()%></Data></Cell>    
+            <Cell><Data ss:Type="String"><%# UniStr.Util.MakeShortDateByUIDateTimeFormat(Eval("DATE_START")).ToString()%></Data></Cell>
+            <Cell><Data ss:Type="String"><%# UniStr.Util.MakeShortTimeByUIDateTimeFormat(Eval("DATE_START")).ToString() %></Data></Cell>
+            <Cell><Data ss:Type="String"><%# UniStr.Util.MakeShortTimeByUIDateTimeFormat(Eval("DATE_END")).ToString()%></Data></Cell>
+            <Cell><Data ss:Type="String"><%# GlobalFunctions.CalculateTotalHours(Eval("TOTAL_HOURS").ToString()) %></Data></Cell>    
             <Cell><Data ss:Type="String"><%# Eval("TERRITORY_NAME").ToString() %></Data></Cell>
             <Cell><Data ss:Type="String"><%# ApplicationData.getUserNameIncludeAdmin(Eval("SYSTEM_USER_ID"),Eval("SYSTEM_USER_NAME")) %></Data></Cell>
             <Cell><Data ss:Type="String"><%# ApplicationData.getUserNameIncludeAdmin(Eval("SYSTEM_USER_UPDATE_ID"),Eval("SYSTEM_USER_UPDATE_NAME")) %></Data></Cell>

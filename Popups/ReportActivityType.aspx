@@ -37,7 +37,10 @@
                 <td>
                     <Polytex:DropDownList ID="DropDownListActivityGroupId" runat="server" DropDownListWidth="170px" DataSourceID="ObjectDataSourceActivityGroups" DataTextField="NAME" DataValueField="ID" InsertEmptyItem="true" IsRequired="false" ValidationGroup="ReportQuery" ValidatorsPosition="Vertical"></Polytex:DropDownList>
                 </td>
-            </tr>            
+            </tr>
+            <tr>        
+                <td colspan="2" style="padding-<%=CultureAlignReverse %>:12px;"><Polytex:CheckBox ID="CheckBoxIncludeDisabled" runat="server" Trans="IncludeDisabled" Checked="false" /></td>              
+            </tr>                        
             </table>
         </td>                                               
     </tr>                       
